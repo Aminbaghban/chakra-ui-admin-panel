@@ -1,22 +1,21 @@
-import { Box, Flex, useBoolean, useBreakpointValue } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  ScaleFade,
+  useBoolean,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import { ErrorFallback } from 'components/generic-error';
 import { Header } from 'components/header';
+import { MainLayoutProps } from 'components/layoutRenderer/index.types';
 import { SideBar } from 'components/sideBar';
+import { createAxis } from 'framer-motion/types/projection/geometry/models';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { IconType } from 'react-icons';
 import { Outlet, useLocation } from 'react-router-dom';
 
-interface MainLayoutProps {
-  sidebarRoutes: {
-    title: string;
-    path: string;
-    icon?: IconType;
-    description?: string;
-  }[];
-}
-
-export const MainLayout = ({ sidebarRoutes }: MainLayoutProps) => {
+export const MainLayout = ({ ...ctx }: MainLayoutProps) => {
   const [sidebarSize, setSidebarSize] = React.useState<'small' | 'large'>(
     'large'
   );
@@ -28,15 +27,18 @@ export const MainLayout = ({ sidebarRoutes }: MainLayoutProps) => {
 
   return (
     <>
-      <Header toggleDrawer={setDrawerOpen.on} />
+      <Header toggleDrawer={setDrawerOpen.on} userName={ctx.navbarTitle} />
       <Flex>
         <SideBar
-          ctx={[...sidebarRoutes]}
+          ctx={[...ctx.sidebarRoutes]}
           sidebarSize={sidebarSize}
           sidebarSizeSetter={setSidebarSize}
           isDrawerOpen={isDrawerOpen}
           drawerOnClose={setDrawerOpen.off}
           variant={variants?.navigation as 'drawer' | 'sidebar'}
+          title={ctx.sidebarTitle}
+          subTitle={ctx.sidebarSubTitle}
+          avatarSource={ctx.sidebarAvatarSrc}
         />
         <Box
           h='calc(100vh - 100px)'
@@ -45,7 +47,7 @@ export const MainLayout = ({ sidebarRoutes }: MainLayoutProps) => {
             variants?.navigation === 'sidebar'
               ? sidebarSize === 'small'
                 ? 'calc(100vw - 75px)'
-                : 'calc(100vw - 300px)'
+                : 'calc(100vw - 350px)'
               : 'full'
           }
           bg='#f5f7fc'
@@ -56,7 +58,9 @@ export const MainLayout = ({ sidebarRoutes }: MainLayoutProps) => {
             FallbackComponent={ErrorFallback}
             resetKeys={[location]}
           >
-            <Outlet />
+            <ScaleFade key={location.pathname} initialScale={0.6} in={true}>
+              <Outlet />
+            </ScaleFade>
           </ErrorBoundary>
         </Box>
       </Flex>

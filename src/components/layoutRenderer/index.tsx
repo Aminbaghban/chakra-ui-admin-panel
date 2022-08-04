@@ -3,9 +3,9 @@ import { MainLayout } from 'components/layout';
 import { AuthProvider } from 'contexts/auth';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { MainLayoutProps } from './index.types';
+import { LayoutRendererProps } from './index.types';
 
-export const LayoutRenderer = ({ ...ctx }: MainLayoutProps) => {
+export const LayoutRenderer = ({ ...ctx }: LayoutRendererProps) => {
   return (
     <AuthProvider authStatusChecker={ctx.authStatusChecker}>
       <Routes>
@@ -13,6 +13,7 @@ export const LayoutRenderer = ({ ...ctx }: MainLayoutProps) => {
           path='/'
           element={
             <MainLayout
+              {...ctx}
               sidebarRoutes={ctx.routes
                 .filter((q) => q.isInSidebar)
                 .map((q) => ({

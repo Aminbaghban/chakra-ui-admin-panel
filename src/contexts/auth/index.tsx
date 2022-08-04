@@ -1,3 +1,4 @@
+import { Center } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { Navigate, useLocation, useSearchParams } from 'react-router-dom';
 
@@ -45,7 +46,7 @@ export function AuthProvider({
   let value = { isAuthenticated, signin, signout };
 
   if (!isAuthenticated) {
-    return <div>amin</div>;
+    return <Center>Authenticaing ...</Center>;
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

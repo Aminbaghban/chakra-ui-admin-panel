@@ -42,7 +42,6 @@ export const NavItem = ({
               <Flex align='center'>
                 <Icon as={icon} fontSize='xl' />
                 <Text
-                  fontWeight='bold'
                   ms='5'
                   display={sidebarSize === 'small' ? 'none' : 'flex'}
                 >
@@ -55,8 +54,8 @@ export const NavItem = ({
             onMouseEnter={onOpen}
             onMouseLeave={onClose}
             py='0'
-            w={200}
-            h={200}
+            w={100}
+            h={100}
             ms={5}
           >
             <SidebarHoverBox title={title} icon={icon} description='' />
@@ -66,11 +65,7 @@ export const NavItem = ({
         <CustomLink to={link} sidebarSize={sidebarSize}>
           <Flex align='center'>
             <Icon as={icon} fontSize='xl' />
-            <Text
-              fontWeight='bold'
-              ms='5'
-              display={sidebarSize === 'small' ? 'none' : 'flex'}
-            >
+            <Text ms='5' display={sidebarSize === 'small' ? 'none' : 'flex'}>
               {title}
             </Text>
           </Flex>

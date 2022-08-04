@@ -25,6 +25,9 @@ export const SideBar = ({
   isDrawerOpen,
   drawerOnClose,
   ctx,
+  title,
+  subTitle,
+  avatarSource,
 }: {
   sidebarSize: 'small' | 'large';
   sidebarSizeSetter: React.Dispatch<React.SetStateAction<'small' | 'large'>>;
@@ -32,12 +35,16 @@ export const SideBar = ({
   isDrawerOpen: boolean;
   drawerOnClose: () => void;
   ctx: SidebarRouteProps[];
+  title: string;
+  subTitle: string;
+  avatarSource?: string;
 }) => {
   return variant === 'sidebar' ? (
     <Flex
       h='calc(100vh - 100px)'
       overflowY='scroll'
-      w={sidebarSize === 'small' ? '75px' : '300px'}
+      w={sidebarSize === 'small' ? '75px' : '350px'}
+      ps={sidebarSize === 'small' ? 'initial' : '50px'}
       boxShadow='lg'
       flexDir='column'
       justifyContent='space-between'
@@ -81,7 +88,7 @@ export const SideBar = ({
       >
         <Divider display={sidebarSize === 'small' ? 'none' : 'flex'} />
         <Flex mt='4' align='center'>
-          <Avatar>
+          <Avatar src={avatarSource}>
             <AvatarBadge boxSize='1.25em' bg='green.500' />
           </Avatar>
           <Flex
@@ -90,9 +97,9 @@ export const SideBar = ({
             ms='4'
           >
             <Heading as='h3' size='sm'>
-              سپیدآریا
+              {title}
             </Heading>
-            <Text fontSize='xs'>راهبر منابع انسانی</Text>
+            <Text fontSize='xs'>{subTitle}</Text>
           </Flex>
         </Flex>
       </Flex>

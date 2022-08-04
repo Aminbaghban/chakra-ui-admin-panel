@@ -17,7 +17,7 @@ export default function SidebarHoverBox({
         pos='absolute'
         mt='calc(100px - 7.5px)'
         ms='-10px'
-        zIndex={100000}
+        zIndex={10000000000}
         width={0}
         height={0}
         borderTop='10px solid transparent'
@@ -25,7 +25,7 @@ export default function SidebarHoverBox({
         borderLeft='10px solid #1967d27d'
       />
       <Flex
-        h={200}
+        h={100}
         w='100%'
         flexDir='column'
         alignItems='center'

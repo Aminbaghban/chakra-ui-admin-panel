@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import { IconType } from 'react-icons';
 
-interface MainLayoutProps {
+interface LayoutRendererProps extends Omit<MainLayoutProps, 'sidebarRoutes'> {
     routes: RouteProps[];
     indexComponent: JSX.Element;
     authStatusChecker: () => Promise<boolean>;
@@ -22,7 +22,19 @@ interface RouteProps {
     icon?: IconType;
     isIndex?: boolean;
 }
+interface MainLayoutProps {
+    sidebarRoutes: {
+        title: string;
+        path: string;
+        icon?: IconType;
+        description?: string;
+    }[];
+    sidebarTitle: string;
+    sidebarSubTitle: string;
+    sidebarAvatarSrc?: string;
+    navbarTitle: string;
+}
 
-declare const LayoutRenderer: ({ ...ctx }: MainLayoutProps) => JSX.Element;
+declare const LayoutRenderer: ({ ...ctx }: LayoutRendererProps) => JSX.Element;
 
-export { LayoutRenderer, MainLayoutProps, RouteProps };
+export { LayoutRenderer, LayoutRendererProps, RouteProps };

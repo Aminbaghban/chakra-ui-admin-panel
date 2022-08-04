@@ -14,7 +14,13 @@ import {
 import React from 'react';
 import { FiAlignRight, FiBell, FiHeart } from 'react-icons/fi';
 
-export const Header = ({ toggleDrawer }: { toggleDrawer: () => void }) => {
+export const Header = ({
+  toggleDrawer,
+  userName,
+}: {
+  toggleDrawer: () => void;
+  userName: string;
+}) => {
   return (
     <Flex
       bg='white'
@@ -65,7 +71,7 @@ export const Header = ({ toggleDrawer }: { toggleDrawer: () => void }) => {
               bg='transparent'
               fontSize='sm'
             >
-              امین باغبان‌زاده
+              {userName}
             </MenuButton>
             <MenuList>
               <MenuItem>سلام</MenuItem>
