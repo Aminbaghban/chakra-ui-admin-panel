@@ -41,7 +41,7 @@ export const SideBar = ({
 }) => {
   return variant === 'sidebar' ? (
     <Flex
-      h='calc(100vh - 100px)'
+      h='calc(100vh - 75px)'
       overflowY='scroll'
       w={sidebarSize === 'small' ? '75px' : '350px'}
       ps={sidebarSize === 'small' ? 'initial' : '50px'}
@@ -105,7 +105,12 @@ export const SideBar = ({
       </Flex>
     </Flex>
   ) : (
-    <Drawer isOpen={isDrawerOpen} placement='right' onClose={drawerOnClose}>
+    <Drawer
+      isOpen={isDrawerOpen}
+      placement='right'
+      onClose={drawerOnClose}
+      size={{ base: 'xs', sm: 'sm', md: 'md' }}
+    >
       <DrawerOverlay>
         <DrawerContent>
           <DrawerCloseButton />

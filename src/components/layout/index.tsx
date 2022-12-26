@@ -9,10 +9,8 @@ import { ErrorFallback } from 'components/generic-error';
 import { Header } from 'components/header';
 import { MainLayoutProps } from 'components/layoutRenderer/index.types';
 import { SideBar } from 'components/sideBar';
-import { createAxis } from 'framer-motion/types/projection/geometry/models';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { IconType } from 'react-icons';
 import { Outlet, useLocation } from 'react-router-dom';
 
 export const MainLayout = ({ ...ctx }: MainLayoutProps) => {
@@ -20,14 +18,23 @@ export const MainLayout = ({ ...ctx }: MainLayoutProps) => {
     'large'
   );
   const smVariant = { navigation: 'drawer', navigationButton: true };
-  const mdVariant = { navigation: 'sidebar', navigationButton: false };
-  const variants = useBreakpointValue({ base: smVariant, md: mdVariant });
+  const lgVariant = { navigation: 'sidebar', navigationButton: false };
+  const variants = useBreakpointValue({
+    base: smVariant,
+    sm: smVariant,
+    md: smVariant,
+    lg: lgVariant,
+  });
   let location = useLocation();
   const [isDrawerOpen, setDrawerOpen] = useBoolean();
 
   return (
     <>
-      <Header toggleDrawer={setDrawerOpen.on} userName={ctx.navbarTitle} />
+      <Header
+        toggleDrawer={setDrawerOpen.on}
+        userName={ctx.navbarTitle}
+        menuContentList={ctx.headerMenuContentList}
+      />
       <Flex>
         <SideBar
           ctx={[...ctx.sidebarRoutes]}
@@ -41,7 +48,7 @@ export const MainLayout = ({ ...ctx }: MainLayoutProps) => {
           avatarSource={ctx.sidebarAvatarSrc}
         />
         <Box
-          h='calc(100vh - 100px)'
+          h='calc(100vh - 75px)'
           display='inline-block'
           w={
             variants?.navigation === 'sidebar'

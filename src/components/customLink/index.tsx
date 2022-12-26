@@ -17,10 +17,11 @@ export function CustomLink({
       {({ isActive }) => (
         <Box
           p='3'
-          bg={isActive ? '#1967d21a' : 'initial'}
-          color={isActive ? '#1967D2' : 'initial'}
+          bg={isActive ? '#f2f7ff' : 'initial'}
+          color={isActive ? '#0066ff' : 'initial'}
           borderRadius='lg'
-          _hover={{ textDecor: 'none', color: '#1967D2', bg: '#1967d21a' }}
+          borderLeft={isActive ? '5px solid #0066ff' : 'none'}
+          _hover={{ textDecor: 'none', color: '#0066ff', bg: '#f2f7ff' }}
         >
           {children}
         </Box>

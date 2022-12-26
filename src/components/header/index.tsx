@@ -8,18 +8,18 @@ import {
   Image,
   Menu,
   MenuButton,
-  MenuItem,
-  MenuList,
 } from '@chakra-ui/react';
 import React from 'react';
-import { FiAlignRight, FiBell, FiHeart } from 'react-icons/fi';
+import { FiAlignRight, FiBell } from 'react-icons/fi';
 
 export const Header = ({
   toggleDrawer,
   userName,
+  menuContentList,
 }: {
   toggleDrawer: () => void;
   userName: string;
+  menuContentList?: React.ReactElement;
 }) => {
   return (
     <Flex
@@ -27,14 +27,14 @@ export const Header = ({
       color='black'
       boxShadow='md'
       justifyContent='space-between'
-      px={{ base: '4', md: '12' }}
-      h={{ base: '75px', md: '100px' }}
+      px={{ base: '4', md: '10' }}
+      h={{ base: '75px', md: '75px' }}
       alignItems='center'
       position='relative'
       zIndex={10}
     >
       <IconButton
-        display={{ md: 'none' }}
+        display={{ lg: 'none' }}
         variant='unstyled'
         aria-label='اعلانات'
         size='lg'
@@ -45,44 +45,35 @@ export const Header = ({
       <Flex>
         <Image
           src='/assets/Logo.svg'
-          w='36'
+          w={{ base: '36', lg: '48' }}
           h={{ base: '12', md: 'full' }}
           mx='auto'
         />
       </Flex>
 
-      <Flex
-        display={{ base: 'none', md: 'flex' }}
-        align='center'
-        justifyContent='end'
-      >
+      <Flex align='center' justifyContent='end'>
         <HStack spacing='4'>
           <IconButton
             variant='ghost'
-            aria-label='علاقه‌مندی ها'
-            icon={<FiHeart />}
+            aria-label='اعلانات'
+            icon={<FiBell />}
+            display={{ base: 'none', lg: 'flex' }}
           />
-          <IconButton variant='ghost' aria-label='اعلانات' icon={<FiBell />} />
-          <Avatar />
+          <Avatar display={{ base: 'none', lg: 'initial' }} />
           <Menu>
-            <MenuButton
-              as={Button}
-              rightIcon={<ChevronDownIcon />}
-              bg='transparent'
-              fontSize='sm'
-            >
-              {userName}
-            </MenuButton>
-            <MenuList>
-              <MenuItem>سلام</MenuItem>
-              <MenuItem>سلام</MenuItem>
-              <MenuItem>سلام</MenuItem>
-            </MenuList>
+            <>
+              <MenuButton
+                as={Button}
+                rightIcon={<ChevronDownIcon />}
+                bg='transparent'
+                fontSize='sm'
+              >
+                {userName}
+              </MenuButton>
+              {menuContentList}
+            </>
           </Menu>
         </HStack>
-      </Flex>
-      <Flex display={{ md: 'none' }}>
-        <Avatar />
       </Flex>
     </Flex>
   );

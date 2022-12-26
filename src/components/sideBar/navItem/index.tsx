@@ -3,14 +3,12 @@ import {
   Icon,
   Menu,
   MenuButton,
-  MenuList,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import { CustomLink } from 'components/customLink';
 import React from 'react';
 import { IconType } from 'react-icons';
-import SidebarHoverBox from '../hoverBox';
 
 export const NavItem = ({
   sidebarSize,
@@ -34,6 +32,7 @@ export const NavItem = ({
       alignItems={sidebarSize === 'small' ? 'center' : 'flex-start'}
       color='gray.600'
       fontSize='sm'
+      borderLeft='3px'
     >
       {variant === 'sidebar' ? (
         <Menu placement='start' isOpen={isOpen}>
@@ -42,6 +41,7 @@ export const NavItem = ({
               <Flex align='center'>
                 <Icon as={icon} fontSize='xl' />
                 <Text
+                  fontSize='md'
                   ms='5'
                   display={sidebarSize === 'small' ? 'none' : 'flex'}
                 >
@@ -50,16 +50,16 @@ export const NavItem = ({
               </Flex>
             </MenuButton>
           </CustomLink>
-          <MenuList
-            onMouseEnter={onOpen}
-            onMouseLeave={onClose}
+          {/* <MenuList
+            // onMouseEnter={onOpen}
+            // onMouseLeave={onClose}
             py='0'
             w={100}
             h={100}
             ms={5}
           >
             <SidebarHoverBox title={title} icon={icon} description='' />
-          </MenuList>
+          </MenuList> */}
         </Menu>
       ) : (
         <CustomLink to={link} sidebarSize={sidebarSize}>

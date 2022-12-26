@@ -1,4 +1,4 @@
-import { Center } from '@chakra-ui/react';
+import { Center, Spinner } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { Navigate, useLocation, useSearchParams } from 'react-router-dom';
 
@@ -46,7 +46,11 @@ export function AuthProvider({
   let value = { isAuthenticated, signin, signout };
 
   if (!isAuthenticated) {
-    return <Center>Authenticaing ...</Center>;
+    return (
+      <Center py='12'>
+        <Spinner size='xl' colorScheme='blue' />
+      </Center>
+    );
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
