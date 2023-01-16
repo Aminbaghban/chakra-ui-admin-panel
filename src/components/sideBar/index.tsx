@@ -77,6 +77,7 @@ export const SideBar = ({
             sidebarSize={sidebarSize}
             title={q.title}
             link={q.path}
+            badgeProps={q.badgeProps}
           />
         ))}
       </Flex>

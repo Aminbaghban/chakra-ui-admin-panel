@@ -32,8 +32,8 @@ export const MainLayout = ({ ...ctx }: MainLayoutProps) => {
     <>
       <Header
         toggleDrawer={setDrawerOpen.on}
-        userName={ctx.navbarTitle}
-        menuContentList={ctx.headerMenuContentList}
+        linkProps={ctx.logoLinkProps}
+        toolsBox={ctx.navbarToolsBox}
       />
       <Flex>
         <SideBar

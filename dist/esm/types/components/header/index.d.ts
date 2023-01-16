@@ -1,6 +1,7 @@
 import React from 'react';
-export declare const Header: ({ toggleDrawer, userName, menuContentList, }: {
+import { LinkProps } from 'react-router-dom';
+export declare const Header: ({ toggleDrawer, linkProps, toolsBox: ToolsBox, }: {
     toggleDrawer: () => void;
-    userName: string;
-    menuContentList?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    linkProps?: LinkProps | undefined;
+    toolsBox: React.LazyExoticComponent<React.ComponentType<any>>;
 }) => JSX.Element;

@@ -1,8 +1,11 @@
 import {
+  Badge,
+  BadgeProps,
   Flex,
   Icon,
   Menu,
   MenuButton,
+  Spacer,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -16,12 +19,14 @@ export const NavItem = ({
   title,
   link,
   variant,
+  badgeProps,
 }: {
   sidebarSize: 'small' | 'large';
   icon: IconType;
   title: string;
   link: string;
   variant: 'drawer' | 'sidebar';
+  badgeProps?: BadgeProps;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -47,19 +52,13 @@ export const NavItem = ({
                 >
                   {title}
                 </Text>
+                <Spacer />
+                {!!badgeProps && (
+                  <Badge {...badgeProps}>{badgeProps.children}</Badge>
+                )}
               </Flex>
             </MenuButton>
           </CustomLink>
-          {/* <MenuList
-            // onMouseEnter={onOpen}
-            // onMouseLeave={onClose}
-            py='0'
-            w={100}
-            h={100}
-            ms={5}
-          >
-            <SidebarHoverBox title={title} icon={icon} description='' />
-          </MenuList> */}
         </Menu>
       ) : (
         <CustomLink to={link} sidebarSize={sidebarSize}>

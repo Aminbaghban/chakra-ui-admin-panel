@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
   Avatar,
+  Badge,
   Button,
   Flex,
   HStack,
@@ -8,18 +9,20 @@ import {
   Image,
   Menu,
   MenuButton,
+  Spinner,
 } from '@chakra-ui/react';
 import React from 'react';
 import { FiAlignRight, FiBell } from 'react-icons/fi';
+import { Link, LinkProps } from 'react-router-dom';
 
 export const Header = ({
   toggleDrawer,
-  userName,
-  menuContentList,
+  linkProps,
+  toolsBox: ToolsBox,
 }: {
   toggleDrawer: () => void;
-  userName: string;
-  menuContentList?: React.ReactElement;
+  linkProps?: LinkProps;
+  toolsBox: React.LazyExoticComponent<React.ComponentType<any>>;
 }) => {
   return (
     <Flex
@@ -40,41 +43,23 @@ export const Header = ({
         size='lg'
         icon={<FiAlignRight />}
         onClick={toggleDrawer}
-      />
+      >
+        <Badge>1</Badge>
+      </IconButton>
 
       <Flex>
-        <Image
-          src='/assets/Logo.svg'
-          w={{ base: '36', lg: '48' }}
-          h={{ base: '12', md: 'full' }}
-          mx='auto'
-        />
-      </Flex>
-
-      <Flex align='center' justifyContent='end'>
-        <HStack spacing='4'>
-          <IconButton
-            variant='ghost'
-            aria-label='اعلانات'
-            icon={<FiBell />}
-            display={{ base: 'none', lg: 'flex' }}
+        <Link to='#' {...linkProps}>
+          <Image
+            src='/assets/Logo.svg'
+            w={{ base: '36', lg: '48' }}
+            h={{ base: '12', md: 'full' }}
+            mx='auto'
           />
-          <Avatar display={{ base: 'none', lg: 'initial' }} />
-          <Menu>
-            <>
-              <MenuButton
-                as={Button}
-                rightIcon={<ChevronDownIcon />}
-                bg='transparent'
-                fontSize='sm'
-              >
-                {userName}
-              </MenuButton>
-              {menuContentList}
-            </>
-          </Menu>
-        </HStack>
+        </Link>
       </Flex>
+      <React.Suspense fallback={<Spinner size='xs' />}>
+        <ToolsBox />
+      </React.Suspense>
     </Flex>
   );
 };

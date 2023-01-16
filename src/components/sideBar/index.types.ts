@@ -1,3 +1,4 @@
+import { BadgeProps } from '@chakra-ui/react';
 import { IconType } from 'react-icons';
 
 export interface SidebarRouteProps {
@@ -5,4 +6,5 @@ export interface SidebarRouteProps {
   path: string;
   icon?: IconType;
   description?: string;
+  badgeProps?: BadgeProps;
 }

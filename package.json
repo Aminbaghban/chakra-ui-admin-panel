@@ -1,6 +1,6 @@
 {
   "name": "@aminbaghbanzadeh/chakra-admin-panel",
-  "version": "1.1.38",
+  "version": "1.1.48",
   "description": "simple responsive admin dashboard with chakra ui, supporting error boundary and lazy loading",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

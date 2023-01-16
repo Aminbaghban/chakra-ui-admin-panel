@@ -1,10 +1,11 @@
 /// <reference types="react" />
-import { MenuListProps } from '@chakra-ui/react';
+import { MenuListProps, BadgeProps } from '@chakra-ui/react';
+import React from 'react';
 import { IconType } from 'react-icons';
+import { LinkProps } from 'react-router-dom';
 
 interface LayoutRendererProps extends Omit<MainLayoutProps, 'sidebarRoutes'> {
     routes: RouteProps[];
-    indexComponent: JSX.Element;
     authStatusChecker: () => Promise<boolean>;
     /**
      * You should pass rendered chakra's <MenuList><MenuItem></MenuItem></MenuList>
@@ -29,6 +30,8 @@ interface RouteProps {
     isInModal?: boolean;
     backgroundPath?: string;
     routeDynamicSection?: string;
+    childRoutes?: RouteProps[];
+    badgeProps?: BadgeProps;
 }
 interface MainLayoutProps {
     sidebarRoutes: {
@@ -36,12 +39,14 @@ interface MainLayoutProps {
         path: string;
         icon?: IconType;
         description?: string;
+        badgeProps?: BadgeProps;
     }[];
     sidebarTitle: string;
     sidebarSubTitle: string;
     sidebarAvatarSrc?: string;
-    navbarTitle: string;
     headerMenuContentList?: React.ReactElement<MenuListProps>;
+    logoLinkProps?: LinkProps;
+    navbarToolsBox: React.LazyExoticComponent<React.ComponentType<any>>;
 }
 
 declare const LayoutRenderer: ({ ...ctx }: LayoutRendererProps) => JSX.Element;
