@@ -4,6 +4,7 @@ import {
   ScaleFade,
   useBoolean,
   useBreakpointValue,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { ErrorFallback } from 'components/generic-error';
 import { Header } from 'components/header';
@@ -26,12 +27,16 @@ export const MainLayout = ({ ...ctx }: MainLayoutProps) => {
     lg: lgVariant,
   });
   let location = useLocation();
-  const [isDrawerOpen, setDrawerOpen] = useBoolean();
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
+  React.useEffect(() => {
+    onClose();
+  }, [location]);
 
   return (
     <>
       <Header
-        toggleDrawer={setDrawerOpen.on}
+        toggleDrawer={onOpen}
         linkProps={ctx.logoLinkProps}
         toolsBox={ctx.navbarToolsBox}
       />
@@ -40,26 +45,27 @@ export const MainLayout = ({ ...ctx }: MainLayoutProps) => {
           ctx={[...ctx.sidebarRoutes]}
           sidebarSize={sidebarSize}
           sidebarSizeSetter={setSidebarSize}
-          isDrawerOpen={isDrawerOpen}
-          drawerOnClose={setDrawerOpen.off}
+          isDrawerOpen={isOpen}
+          drawerOnClose={onClose}
           variant={variants?.navigation as 'drawer' | 'sidebar'}
           title={ctx.sidebarTitle}
           subTitle={ctx.sidebarSubTitle}
           avatarSource={ctx.sidebarAvatarSrc}
         />
         <Box
-          h='calc(100vh - 75px)'
+          h={{ xl: 'calc(100vh - 60px)', '2xl': 'calc(100vh - 75px)' }}
           display='inline-block'
           w={
             variants?.navigation === 'sidebar'
               ? sidebarSize === 'small'
                 ? 'calc(100vw - 75px)'
-                : 'calc(100vw - 350px)'
+                : { xl: 'calc(100vw - 300px)', '2xl': 'calc(100vw - 350px)' }
               : 'full'
           }
           bg='#f5f7fc'
-          p={{ base: '4', md: '6', lg: '12' }}
+          p={{ base: '4', md: '6', '2xl': '12' }}
           overflowY='scroll'
+          minH={{ base: '100vh', lg: 'initial' }}
         >
           <ErrorBoundary
             FallbackComponent={ErrorFallback}

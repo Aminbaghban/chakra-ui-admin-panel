@@ -1,5 +1,6 @@
 /// <reference types="react" />
 import { MenuListProps, BadgeProps } from '@chakra-ui/react';
+import { SidebarRouteProps } from 'components/sideBar/index.types';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { LinkProps } from 'react-router-dom';
@@ -11,10 +12,11 @@ interface LayoutRendererProps extends Omit<MainLayoutProps, 'sidebarRoutes'> {
      * You should pass rendered chakra's <MenuList><MenuItem></MenuItem></MenuList>
      */
     headerMenuContentList?: React.ReactElement<MenuListProps>;
+    userRoles?: Array<string>;
 }
 interface RouteProps {
     title: string;
-    path: string;
+    path?: string;
     /**
      * you should be authenticated in order to access to this kind of pages.
      */
@@ -32,15 +34,10 @@ interface RouteProps {
     routeDynamicSection?: string;
     childRoutes?: RouteProps[];
     badgeProps?: BadgeProps;
+    allowedRoles?: Array<string>;
 }
 interface MainLayoutProps {
-    sidebarRoutes: {
-        title: string;
-        path: string;
-        icon?: IconType;
-        description?: string;
-        badgeProps?: BadgeProps;
-    }[];
+    sidebarRoutes: Array<SidebarRouteProps>;
     sidebarTitle: string;
     sidebarSubTitle: string;
     sidebarAvatarSrc?: string;

@@ -1,6 +1,8 @@
 import { Center, Spinner } from '@chakra-ui/react';
 import { AutoMetaTagBuilder } from 'components/auto-meta-tags-builder';
 import { MainLayout } from 'components/layout';
+import { PrivateRoute } from 'components/Private';
+import { SidebarRouteProps } from 'components/sideBar/index.types';
 import { AuthProvider } from 'contexts/auth';
 import React from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
@@ -21,8 +23,9 @@ const routesRenderer = (routes: RouteProps[]) => {
                     thickness='4px'
                     speed='0.65s'
                     emptyColor='gray.200'
-                    color='#1d68d2'
+                    color='primary.500'
                     size='xl'
+                    mb='4'
                   />
                 </Center>
               }
@@ -37,30 +40,33 @@ const routesRenderer = (routes: RouteProps[]) => {
         .map((q) => {
           var Component = q.component!;
           return (
-            <Route
-              key={q.path}
-              path={q.path}
-              element={
-                <React.Suspense
-                  fallback={
-                    <Center w='full'>
-                      <Spinner
-                        thickness='4px'
-                        speed='0.65s'
-                        emptyColor='gray.200'
-                        color='#1d68d2'
-                        size='xl'
-                      />
-                    </Center>
-                  }
-                >
-                  <AutoMetaTagBuilder route={q}>
-                    <Component />
-                  </AutoMetaTagBuilder>
-                </React.Suspense>
-              }
-            >
-              {!!q.childRoutes && routesRenderer(q.childRoutes)}
+            <Route element={<PrivateRoute allowedRoles={q.allowedRoles} />}>
+              <Route
+                key={q.path}
+                path={q.path}
+                element={
+                  <React.Suspense
+                    fallback={
+                      <Center w='full'>
+                        <Spinner
+                          thickness='4px'
+                          speed='0.65s'
+                          emptyColor='gray.200'
+                          color='primary.500'
+                          size='xl'
+                          mb='4'
+                        />
+                      </Center>
+                    }
+                  >
+                    <AutoMetaTagBuilder route={q}>
+                      <Component />
+                    </AutoMetaTagBuilder>
+                  </React.Suspense>
+                }
+              >
+                {!!q.childRoutes && routesRenderer(q.childRoutes)}
+              </Route>
             </Route>
           );
         })}
@@ -77,28 +83,39 @@ export const LayoutRenderer = ({ ...ctx }: LayoutRendererProps) => {
       (!!q.isInModal &&
         !!q.backgroundPath &&
         location.pathname.includes(
-          q.path.substring(0, q.path.indexOf(q.routeDynamicSection ?? '$')) ||
+          q.path?.substring(0, q.path.indexOf(q.routeDynamicSection ?? '$')) ||
             '$'
         ))
   );
 
   return (
-    <AuthProvider authStatusChecker={ctx.authStatusChecker}>
+    <AuthProvider
+      authStatusChecker={ctx.authStatusChecker}
+      userRoles={ctx.userRoles}
+    >
       <Routes location={modalRoute?.backgroundPath ?? location}>
         <Route
           path='/'
           element={
             <MainLayout
               {...ctx}
-              sidebarRoutes={ctx.routes
-                .filter((q) => q.isInSidebar)
-                .map((q) => ({
+              sidebarRoutes={ctx.routes.map(function mapper(q): any {
+                return {
                   description: q.description,
                   icon: q.icon,
                   path: q.path,
                   title: q.title,
                   badgeProps: q.badgeProps,
-                }))}
+                  children: q.childRoutes?.map(mapper),
+                  show: !!q.isInSidebar
+                    ? !!q.allowedRoles?.length
+                      ? q.allowedRoles?.every((role) =>
+                          ctx.userRoles?.includes(role)
+                        )
+                      : true
+                    : false,
+                } as SidebarRouteProps;
+              })}
             />
           }
         >

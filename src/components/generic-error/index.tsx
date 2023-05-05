@@ -22,7 +22,9 @@ export function ErrorFallback({ error, resetErrorBoundary }: any) {
       <AlertTitle mt={4} mb={1} fontSize='lg'>
         مشکلی رخ داده است.
       </AlertTitle>
-      <AlertDescription maxWidth='sm'>{error.message}</AlertDescription>
+      {process.env.NODE_ENV === 'development' && (
+        <AlertDescription maxWidth='sm'>{error.message}</AlertDescription>
+      )}
       <Button
         variant='outline'
         colorScheme='red'

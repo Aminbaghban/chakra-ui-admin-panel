@@ -41,10 +41,10 @@ export const SideBar = ({
 }) => {
   return variant === 'sidebar' ? (
     <Flex
-      h='calc(100vh - 75px)'
+      h={{ xl: 'calc(100vh - 60px)', '2xl': 'calc(100vh - 75px)' }}
       overflowY='scroll'
-      w={sidebarSize === 'small' ? '75px' : '350px'}
-      ps={sidebarSize === 'small' ? 'initial' : '50px'}
+      w={sidebarSize === 'small' ? '75px' : { xl: '300px', '2xl': '350px' }}
+      ps={sidebarSize === 'small' ? 'initial' : { xl: '30px', '2xl': '50px' }}
       boxShadow='lg'
       flexDir='column'
       justifyContent='space-between'
@@ -69,17 +69,20 @@ export const SideBar = ({
           }
           alignSelf={sidebarSize === 'small' ? 'center' : 'end'}
         />
-        {ctx.map((q) => (
-          <NavItem
-            variant={variant}
-            key={q.path}
-            icon={q.icon!}
-            sidebarSize={sidebarSize}
-            title={q.title}
-            link={q.path}
-            badgeProps={q.badgeProps}
-          />
-        ))}
+        {ctx
+          .filter((q) => !!q.show)
+          .map((q) => (
+            <NavItem
+              variant={variant}
+              key={q.path}
+              icon={q.icon!}
+              sidebarSize={sidebarSize}
+              title={q.title}
+              path={q.path}
+              badgeProps={q.badgeProps}
+              children={q.children}
+            />
+          ))}
       </Flex>
       <Flex
         p='4'
@@ -89,7 +92,7 @@ export const SideBar = ({
       >
         <Divider display={sidebarSize === 'small' ? 'none' : 'flex'} />
         <Flex mt='4' align='center'>
-          <Avatar src={avatarSource}>
+          <Avatar src={avatarSource} objectFit='contain'>
             <AvatarBadge boxSize='1.25em' bg='green.500' />
           </Avatar>
           <Flex
@@ -117,16 +120,19 @@ export const SideBar = ({
           <DrawerCloseButton />
           <DrawerHeader></DrawerHeader>
           <DrawerBody>
-            {ctx.map((q) => (
-              <NavItem
-                variant={variant}
-                key={q.path}
-                icon={q.icon!}
-                sidebarSize={sidebarSize}
-                title={q.title}
-                link={q.path}
-              />
-            ))}
+            {ctx
+              .filter((q) => !!q.show)
+              .map((q) => (
+                <NavItem
+                  variant={variant}
+                  key={q.path}
+                  icon={q.icon!}
+                  sidebarSize={sidebarSize}
+                  title={q.title}
+                  path={q.path}
+                  children={q.children}
+                />
+              ))}
           </DrawerBody>
         </DrawerContent>
       </DrawerOverlay>

@@ -7,4 +7,6 @@ export interface SidebarRouteProps {
   icon?: IconType;
   description?: string;
   badgeProps?: BadgeProps;
+  children: Array<SidebarRouteProps>;
+  show: boolean;
 }

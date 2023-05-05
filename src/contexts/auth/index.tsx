@@ -6,6 +6,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   signin: (user: string, callback: VoidFunction) => void;
   signout: (callback: VoidFunction) => void;
+  userRoles?: Array<string>;
 }
 
 let AuthContext = React.createContext<AuthContextType>(null!);
@@ -13,9 +14,11 @@ let AuthContext = React.createContext<AuthContextType>(null!);
 export function AuthProvider({
   children,
   authStatusChecker,
+  userRoles,
 }: {
   children: React.ReactNode;
   authStatusChecker: () => Promise<boolean>;
+  userRoles?: Array<string>;
 }) {
   let [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
 
@@ -43,7 +46,7 @@ export function AuthProvider({
     });
   }, [authStatusChecker]);
 
-  let value = { isAuthenticated, signin, signout };
+  let value = { isAuthenticated, signin, signout, userRoles };
 
   if (!isAuthenticated) {
     return (
