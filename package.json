@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "@aminbaghbanzadeh/chakra-admin-panel",
   "version": "1.1.76",
@@ -58,3 +59,65 @@
     "react-helmet": "^6.1.0"
   }
 }
+=======
+{
+  "name": "@aminbaghbanzadeh/chakra-admin-panel",
+  "version": "1.1.76",
+  "description": "simple responsive admin dashboard with chakra ui, supporting error boundary and lazy loading",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && rollup -c"
+  },
+  "keywords": [
+    "chakra",
+    "admin",
+    "dashboard"
+  ],
+  "author": "Amin Baghbanzadeh",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.3",
+    "@types/node": "^18.0.0",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.75.6",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "typescript": "^4.7.3",
+    "@types/react-helmet": "^6.1.5"
+  },
+  "peerDependencies": {
+    "@chakra-ui/icons": "^2.0.2",
+    "@chakra-ui/react": "^2.2.1",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.2.0",
+    "@types/jest": "^25.2.3",
+    "@types/node": "^12.20.55",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
+    "framer-motion": "^6.3.11",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-error-boundary": "^3.1.4",
+    "react-icons": "^3.11.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^0.2.4",
+    "react-helmet": "^6.1.0"
+  }
+}
+>>>>>>> 208dee2c6bfe405a883577f07f1755c720f780ea
