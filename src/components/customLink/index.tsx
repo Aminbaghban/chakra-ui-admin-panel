@@ -4,13 +4,16 @@ import { LinkProps, NavLink } from 'react-router-dom';
 
 export function CustomLink({
   sidebarSize,
-  children,
   to,
+  children,
   ...props
-}: LinkProps & { sidebarSize: 'large' | 'small' }) {
+}: Omit<LinkProps, 'children'> & {
+  sidebarSize: 'large' | 'small';
+  children: any;
+}) {
   return (
     <NavLink
-      to={to}
+      to={to!}
       {...props}
       style={{ width: sidebarSize === 'large' ? '100%' : 'initial' }}
     >
@@ -23,7 +26,7 @@ export function CustomLink({
           borderLeft={isActive ? '5px solid #0066ff' : 'none'}
           _hover={{ textDecor: 'none', color: '#0066ff', bg: '#f2f7ff' }}
         >
-          {children}
+          {children!(isActive)}
         </Box>
       )}
     </NavLink>

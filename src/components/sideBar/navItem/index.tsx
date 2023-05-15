@@ -1,6 +1,8 @@
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import {
   Badge,
-  BadgeProps,
+  Box,
+  Collapse,
   Flex,
   Icon,
   Menu,
@@ -11,65 +13,103 @@ import {
 } from '@chakra-ui/react';
 import { CustomLink } from 'components/customLink';
 import React from 'react';
-import { IconType } from 'react-icons';
+import { SidebarRouteProps } from '../index.types';
 
 export const NavItem = ({
-  sidebarSize,
-  icon,
-  title,
-  link,
-  variant,
-  badgeProps,
+  ...ctx
 }: {
   sidebarSize: 'small' | 'large';
-  icon: IconType;
-  title: string;
-  link: string;
   variant: 'drawer' | 'sidebar';
-  badgeProps?: BadgeProps;
-}) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+} & Partial<SidebarRouteProps>) => {
+  const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   return (
-    <Flex
-      mt='2'
-      flexDir='column'
-      w='100%'
-      alignItems={sidebarSize === 'small' ? 'center' : 'flex-start'}
-      color='gray.600'
-      fontSize='sm'
-      borderLeft='3px'
-    >
-      {variant === 'sidebar' ? (
-        <Menu placement='start' isOpen={isOpen}>
-          <CustomLink to={link} sidebarSize={sidebarSize}>
-            <MenuButton w='full' onMouseEnter={onOpen} onMouseLeave={onClose}>
+    <>
+      <Flex
+        mt='2'
+        flexDir='column'
+        w='100%'
+        alignItems={ctx.sidebarSize === 'small' ? 'center' : 'flex-start'}
+        color='gray.600'
+        fontSize='sm'
+        borderLeft='3px'
+        onClick={(e) => {
+          onToggle();
+          e.stopPropagation();
+        }}
+      >
+        {ctx.variant === 'sidebar' ? (
+          <Menu placement='start' isOpen={isOpen}>
+            <CustomLink
+              to={ctx.path ?? '#'}
+              sidebarSize={ctx.sidebarSize}
+              onClick={(e) => {
+                if (!!ctx.children) {
+                  e.preventDefault();
+                }
+              }}
+            >
+              {(isActive: boolean) => (
+                <MenuButton w='full'>
+                  <Flex align='center'>
+                    <Icon as={ctx.icon} fontSize='xl' />
+                    <Text
+                      fontSize={{ xl: 'sm', '2xl': 'md' }}
+                      ms='5'
+                      display={ctx.sidebarSize === 'small' ? 'none' : 'flex'}
+                    >
+                      {ctx.title}
+                    </Text>
+                    <Spacer />
+                    {!!ctx.badgeProps && ctx.sidebarSize === 'large' && (
+                      <Badge {...ctx.badgeProps}>
+                        {ctx.badgeProps.children}
+                      </Badge>
+                    )}
+                    {!!ctx.children && <ChevronDownIcon />}
+                  </Flex>
+                </MenuButton>
+              )}
+            </CustomLink>
+          </Menu>
+        ) : (
+          <CustomLink
+            to={ctx.path ?? '#'}
+            sidebarSize={ctx.sidebarSize}
+            onClick={(e) => {
+              if (!!ctx.children) {
+                e.preventDefault();
+              }
+            }}
+          >
+            {(isActive: boolean) => (
               <Flex align='center'>
-                <Icon as={icon} fontSize='xl' />
+                <Icon as={ctx.icon} fontSize='xl' />
                 <Text
-                  fontSize='md'
                   ms='5'
-                  display={sidebarSize === 'small' ? 'none' : 'flex'}
+                  display={ctx.sidebarSize === 'small' ? 'none' : 'flex'}
                 >
-                  {title}
+                  {ctx.title}
                 </Text>
                 <Spacer />
-                {!!badgeProps && (
-                  <Badge {...badgeProps}>{badgeProps.children}</Badge>
-                )}
+                {!!ctx.children && <ChevronDownIcon />}
               </Flex>
-            </MenuButton>
+            )}
           </CustomLink>
-        </Menu>
-      ) : (
-        <CustomLink to={link} sidebarSize={sidebarSize}>
-          <Flex align='center'>
-            <Icon as={icon} fontSize='xl' />
-            <Text ms='5' display={sidebarSize === 'small' ? 'none' : 'flex'}>
-              {title}
-            </Text>
-          </Flex>
-        </CustomLink>
+        )}
+      </Flex>
+      {ctx.children && (
+        <Box bg='#f9fcff' rounded='md' w='full'>
+          <Collapse in={isOpen} animateOpacity style={{ width: '100%' }}>
+            {ctx.children.map((q) => (
+              <NavItem
+                {...q}
+                sidebarSize={ctx.sidebarSize}
+                variant={ctx.variant}
+              />
+            ))}
+          </Collapse>
+        </Box>
       )}
-    </Flex>
+    </>
   );
 };

@@ -1,11 +1,6 @@
 /// <reference types="react" />
-import { BadgeProps } from '@chakra-ui/react';
-import { IconType } from 'react-icons';
-export declare const NavItem: ({ sidebarSize, icon, title, link, variant, badgeProps, }: {
+import { SidebarRouteProps } from '../index.types';
+export declare const NavItem: ({ ...ctx }: {
     sidebarSize: 'small' | 'large';
-    icon: IconType;
-    title: string;
-    link: string;
     variant: 'drawer' | 'sidebar';
-    badgeProps?: BadgeProps | undefined;
-}) => JSX.Element;
+} & Partial<SidebarRouteProps>) => JSX.Element;
